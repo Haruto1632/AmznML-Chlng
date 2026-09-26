@@ -127,7 +127,8 @@ def generate_candidates(
             )
 
     # ── Pre-build shared indices ──────────────────────────────────────────
-    max_df_frac = bcfg.get("token_max_df_frac", 0.01)
+    max_df_frac = bcfg.get("token_max_df_frac", 0.001)   # 0.1% default
+    max_bucket_size = bcfg.get("token_max_bucket_size", 5000)  # cap per bucket
 
     # Token indices (shared by both token strategies)
     needs_token = (
@@ -139,7 +140,9 @@ def generate_candidates(
         logger.info("Building token inverted index...")
         t0 = time.time()
         country_token_index, token_index, stop_tokens = _build_token_index(
-            candidates, max_df_frac=max_df_frac
+            candidates,
+            max_df_frac=max_df_frac,
+            max_bucket_size=max_bucket_size,
         )
         logger.info("  Token index built in %.1fs", time.time() - t0)
 
