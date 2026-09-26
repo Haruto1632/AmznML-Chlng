@@ -3,10 +3,12 @@ normalizer.py — Entry point for all normalization.
 
 Owner: Member A  |  Branch: feature/blocking
 
-TODO (Member A):
-  1. Implement normalize_records()
-  2. Wire in name_cleaner.py, address_cleaner.py, country_mapper.py
-  3. Add tests in tests/test_normalizer.py
+Vectorized implementation:
+  - country: fully vectorized via .map()
+  - name + address: .apply() row-wise (unavoidable due to tuple returns,
+    but single-pass with no repeated work)
+
+Memory: adds ~6 columns to each DataFrame (in-place on copy).
 """
 
 from __future__ import annotations
@@ -25,6 +27,9 @@ from ..shared.schemas import (
     COL_ADDRESS_NUMBERS,
     COL_COUNTRY_NORMALIZED,
 )
+from .name_cleaner import clean_name
+from .address_cleaner import clean_address
+from .country_mapper import normalize_country
 
 
 def normalize_records(df: pd.DataFrame) -> pd.DataFrame:
@@ -41,15 +46,29 @@ def normalize_records(df: pd.DataFrame) -> pd.DataFrame:
     -------
     pd.DataFrame
         Same rows, with ADDITIONAL columns (originals preserved):
-          business_name_normalized
-          business_name_tokens
-          business_name_token_sorted
-          business_address_normalized
-          address_numbers
-          country_normalized
+          business_name_normalized    (str)
+          business_name_tokens        (frozenset[str])
+          business_name_token_sorted  (str)
+          business_address_normalized (str)
+          address_numbers             (list[str])
+          country_normalized          (str)
     """
-    # TODO: implement using name_cleaner, address_cleaner, country_mapper
-    raise NotImplementedError(
-        "normalize_records() not yet implemented. "
-        "See TEAM_TASKS.md Task A-2 for requirements."
+    result = df.copy()
+
+    # ── Country (fully vectorized) ────────────────────────────────────────
+    result[COL_COUNTRY_NORMALIZED] = (
+        result[COL_COUNTRY].fillna("").map(normalize_country)
     )
+
+    # ── Business name (.apply — single pass, tuple unpack) ────────────────
+    name_results = result[COL_BUSINESS_NAME].fillna("").apply(clean_name)
+    result[COL_NAME_NORMALIZED] = name_results.apply(lambda t: t[0])
+    result[COL_NAME_TOKENS] = name_results.apply(lambda t: t[1])
+    result[COL_NAME_TOKEN_SORTED] = name_results.apply(lambda t: t[2])
+
+    # ── Business address (.apply — single pass, tuple unpack) ─────────────
+    addr_results = result[COL_BUSINESS_ADDRESS].fillna("").apply(clean_address)
+    result[COL_ADDRESS_NORMALIZED] = addr_results.apply(lambda t: t[0])
+    result[COL_ADDRESS_NUMBERS] = addr_results.apply(lambda t: t[1])
+
+    return result
