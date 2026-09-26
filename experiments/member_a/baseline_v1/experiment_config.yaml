@@ -1,0 +1,66 @@
+# Baseline Experiment v1 — Member A
+# Conservative blocking + classical ML features + LightGBM
+
+data:
+  train_dir: "student_resource/dataset/train"
+  test_dir: "student_resource/dataset/test"
+  output_dir: "experiments/member_a/baseline_v1/output"
+
+normalization:
+  lowercase: true
+  strip_whitespace: true
+  expand_legal_suffixes: true
+  transliterate_non_latin: true  # Devanagari → ASCII
+  extract_address_numbers: true
+
+blocking:
+  strategies:
+    exact_country_token: true       # same country + ≥1 shared name token
+    token_overlap: true             # Jaccard ≥ threshold
+    ngram_lsh: true                 # MinHash LSH on char 3-grams
+    phonetic: true                  # Soundex (Latin only)
+    address_numeric: true           # shared address numbers
+  
+  token_overlap_threshold: 0.2      # min Jaccard for token_overlap strategy
+  ngram_lsh_threshold: 0.3          # min Jaccard for LSH
+  ngram_n: 3                        # character n-gram size
+  lsh_num_perm: 128                 # MinHash permutations
+  max_candidates_per_s1: 50         # hard cap
+
+features:
+  name_token_jaccard: true
+  name_char3gram_tfidf_cosine: true
+  name_levenshtein: true
+  name_jaro_winkler: true
+  name_exact_normalized: true
+  addr_token_jaccard: true
+  addr_numeric_overlap: true
+  addr_char3gram_cosine: true
+  country_exact: true
+  num_blocking_strategies: true
+  tfidf_max_features: 5000          # char n-gram vocabulary size
+
+model:
+  type: "lightgbm"                  # or "xgboost" or "histgbm"
+  n_estimators: 300
+  learning_rate: 0.05
+  num_leaves: 31
+  max_depth: -1                     # no limit
+  min_child_samples: 20
+  random_state: 42
+  early_stopping_rounds: 30
+
+training:
+  val_split: 0.2                    # 80/20 train/val
+  sample_train_pairs: null          # null = use all, or set to int (e.g., 1000000)
+  hard_negative_ratio: 0.7          # fraction of negatives that are hard (from blocking)
+  balance_positives: false          # undersample positives to match negatives
+
+calibration:
+  thresholds: [0.50, 0.55, 0.60, 0.65, 0.70, 0.75, 0.80, 0.85, 0.90, 0.95]
+  metric: "f05"
+
+experiment:
+  name: "baseline_v1"
+  description: "Conservative normalization + multi-strategy blocking + classical features + LightGBM"
+  run_on_test: false                # set true to generate test predictions (after validating on train)
