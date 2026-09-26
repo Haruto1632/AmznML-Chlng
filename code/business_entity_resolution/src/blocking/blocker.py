@@ -182,17 +182,19 @@ def generate_candidates(
     # ── Run strategies ────────────────────────────────────────────────────
     logger.info("\nRunning blocking strategies on %d S1 entities...", len(source1))
 
+    max_cands = bcfg.get("max_strategy_candidates", 200)
+
     if bcfg.get("strategy_exact_token", True) and country_token_index is not None:
         logger.info("Strategy 1: %s", STRATEGY_EXACT_TOKEN)
         pairs = generate_exact_country_token_pairs(
-            source1, candidates, country_token_index, stop_tokens
+            source1, candidates, country_token_index, stop_tokens, max_cands_per_s1=max_cands
         )
         _accumulate(pairs, STRATEGY_EXACT_TOKEN)
 
     if bcfg.get("strategy_token_overlap", True) and token_index is not None:
         logger.info("Strategy 2: %s", STRATEGY_TOKEN_OVERLAP)
         pairs = generate_token_overlap_pairs(
-            source1, candidates, token_index, stop_tokens
+            source1, candidates, token_index, stop_tokens, max_cands_per_s1=max_cands
         )
         _accumulate(pairs, STRATEGY_TOKEN_OVERLAP)
 

@@ -49,6 +49,8 @@ DEFAULT_CONFIG: Dict[str, Any] = {
         "ngram_lsh_num_perm": 128,
         "ngram_lsh_threshold": 0.25,
         "ngram_n": 3,
+        "token_max_df_frac": 0.001,
+        "token_max_bucket_size": 5000,
     },
 
     # -----------------------------------------------------------------------
