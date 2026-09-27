@@ -1,38 +1,31 @@
-# Requirements — Amazon ML Challenge: Business Entity Resolution
-# Pin all versions. Run: pip install -r requirements.txt
+# Amazon ML Challenge 2026 — Business Entity Resolution
+# Python dependencies for code/business_entity_resolution/
+# Install with: pip install -r requirements.txt
 
 # Core data
 pandas==2.2.2
 numpy==1.26.4
 
 # String similarity
-rapidfuzz==3.9.3          # Levenshtein, Jaro-Winkler, token ratios — MIT license
-jellyfish==1.0.3          # phonetic algorithms (Soundex, Metaphone) — MIT license
+rapidfuzz==3.9.3
+jellyfish==1.0.3
 
 # Approximate nearest neighbour / LSH
-datasketch==1.6.5         # MinHash LSH for n-gram blocking — MIT license
+datasketch==1.6.5
 
-# ML models (choose one GBM backend; all are MIT/Apache 2.0)
-lightgbm==4.3.0           # preferred GBM backend — MIT license
-# xgboost==2.0.3          # alternative — Apache 2.0 license
-scikit-learn==1.4.2       # HistGradientBoosting fallback + utilities — BSD license
+# Machine learning
+lightgbm==4.3.0
+scikit-learn==1.4.2
 
-# TF-IDF / sparse features
-scipy==1.13.0             # sparse matrix support — BSD license
-
-# Optional: pretrained embeddings for embedding_ann blocking
-# sentence-transformers==3.0.1  # Apache 2.0 — uncomment if using embedding blocking
-# torch==2.3.0                  # required by sentence-transformers
+# Sparse matrices / TF-IDF
+scipy==1.13.0
 
 # Utilities
-tqdm==4.66.4              # progress bars — MIT license
-pyyaml==6.0.1             # config file parsing — MIT license
+tqdm==4.66.4
+pyyaml==6.0.1
 
-# Transliteration (local, no API)
-unidecode==1.3.8          # Latin transliteration — GPL-2.0 — NOTE: check license compatibility
-# Alternative (MIT): anyascii==0.3.2
+# Transliteration
+unidecode==1.3.8
 
-# Development / testing
+# Testing
 pytest==8.2.2
-pyarrow==17.0.0          # memory-mapped Arrow records — Apache 2.0
-psutil==6.0.0            # runtime memory monitoring — BSD
