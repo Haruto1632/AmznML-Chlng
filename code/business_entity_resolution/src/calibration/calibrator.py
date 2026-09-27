@@ -3,13 +3,13 @@ calibrator.py — Decision threshold calibration for F_0.5.
 
 Owner: Member C  |  Branch: feature/evaluation-pipeline
 
-TODO (Member C): Implement calibrate_threshold().
-See TEAM_TASKS.md Task C-3.
+Threshold selection uses the complete supplied validation cohort.
 """
 
 from __future__ import annotations
 
 from typing import Dict, List, Optional
+import math
 
 import pandas as pd
 
@@ -37,13 +37,14 @@ def apply_threshold(
         {source1_entity_id: [matched_entity_ids, ...]}
         Entities with no pair above threshold → empty list (singleton prediction).
     """
-    result: Dict[str, List[str]] = {}
-    for _, row in predictions_df.iterrows():
-        s1_id = row[COL_SOURCE1_ID]
-        if s1_id not in result:
-            result[s1_id] = []
-        if row[COL_MATCH_PROB] >= threshold:
-            result[s1_id].append(row[COL_CANDIDATE_ID])
+    if not math.isfinite(threshold) or not 0 <= threshold <= 1:
+        raise ValueError("Threshold must be finite and between 0 and 1")
+    if not predictions_df[COL_MATCH_PROB].between(0, 1).all():
+        raise ValueError("Match probabilities must be finite and between 0 and 1")
+    result = {key: [] for key in predictions_df[COL_SOURCE1_ID].unique()}
+    accepted = predictions_df.loc[predictions_df[COL_MATCH_PROB] >= threshold]
+    accepted = accepted.drop_duplicates([COL_SOURCE1_ID, COL_CANDIDATE_ID])
+    result.update(accepted.groupby(COL_SOURCE1_ID, sort=False)[COL_CANDIDATE_ID].agg(list).to_dict())
     return result
 
 
@@ -60,7 +61,7 @@ def calibrate_threshold(
     ----------
     predictions_df : pd.DataFrame
         Columns: source1_entity_id, candidate_entity_id, match_probability
-        Must cover ALL Source 1 entities (even those with no candidates).
+        Contains only scored pairs. Zero-candidate entities belong in all_s1_ids.
     ground_truth : dict
         {source1_entity_id: [true_matched_ids]}
     all_s1_ids : list[str]
@@ -77,6 +78,14 @@ def calibrate_threshold(
     """
     if thresholds is None:
         thresholds = [round(t, 2) for t in [x / 100 for x in range(50, 96, 5)]]
+    if not thresholds:
+        raise ValueError("At least one threshold is required")
+    if not all_s1_ids or len(set(all_s1_ids)) != len(all_s1_ids):
+        raise ValueError("Validation IDs must be non-empty and unique")
+    if set(all_s1_ids) != set(ground_truth):
+        raise ValueError("Ground truth must cover exactly the validation IDs")
+    if not predictions_df[COL_SOURCE1_ID].isin(all_s1_ids).all():
+        raise ValueError("Scored pairs contain IDs outside the validation cohort")
 
     rows = []
     for t in thresholds:
@@ -92,7 +101,7 @@ def calibrate_threshold(
         rows.append({"threshold": t, "precision": p, "recall": r, "f05": f05})
 
     curve_df = pd.DataFrame(rows)
-    best_row = curve_df.loc[curve_df["f05"].idxmax()]
+    best_row = curve_df.sort_values(["f05", "threshold"], ascending=False).iloc[0]
 
     return {
         "best_threshold": float(best_row["threshold"]),

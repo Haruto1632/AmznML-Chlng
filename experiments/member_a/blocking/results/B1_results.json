@@ -1,0 +1,19 @@
+{
+  "blocking_recall": 0.5532623400048562,
+  "total_candidates": 25478319,
+  "total_true_pairs": 86487,
+  "true_pairs_recalled": 47850,
+  "avg_candidates_per_s1": 1019.13276,
+  "median_candidates_per_s1": 163.0,
+  "p95_candidates_per_s1": 4244.0,
+  "max_candidates_per_s1": 11153,
+  "reduction_ratio": 0.9999012489211712,
+  "per_strategy_recall": {
+    "exact_country_name_token": 0.5532623400048562
+  },
+  "runtime_seconds": 500.4698088169098,
+  "experiment_id": "B1",
+  "description": "Token blocking only (exact_country_name_token)",
+  "n_s1": 25000,
+  "n_s23": 10320219
+}

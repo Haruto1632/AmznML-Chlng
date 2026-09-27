@@ -77,7 +77,7 @@ class BaselinePipeline:
         self._evaluate_blocking(candidate_pairs)
 
         # 4. Write candidate_pairs.tsv (challenge requirement)
-        self._write_candidate_pairs(candidate_pairs)
+        # Export only the validation pairs actually scored, after the split.
 
         # 5. Features
         candidates_combined = pd.concat(
@@ -132,16 +132,24 @@ class BaselinePipeline:
             final_predictions.setdefault(s1_id, [])
 
         # 11. Evaluate
-        report = evaluator.full_evaluation_report(
-            final_predictions, gt_val, candidate_pairs
-        )
+        val_candidates = candidate_pairs[candidate_pairs["source1_entity_id"].isin(val_s1_ids)]
+        pair_keys = ["source1_entity_id", "candidate_entity_id"]
+        scored_keys = pd.MultiIndex.from_frame(predictions_df[pair_keys])
+        exported_keys = pd.MultiIndex.from_frame(val_candidates[pair_keys])
+        if not scored_keys.is_unique or not exported_keys.is_unique or len(scored_keys) != len(exported_keys) or not scored_keys.isin(exported_keys).all():
+            raise ValueError("Validation candidate export must equal the unique pairs scored by the model")
+        report = evaluator.full_evaluation_report(final_predictions, gt_val, val_candidates)
+        n_s23 = len(self.s2_train) + len(self.s3_train)
+        report["reduction_ratio"] = 1 - len(val_candidates) / (len(val_s1_ids) * n_s23) if n_s23 else None
+        report["avg_candidates"] = report["avg_candidates_per_s1"]
         elapsed = time.time() - start_time
         report["runtime_seconds"] = elapsed
         report["best_threshold"]  = cal_result["best_threshold"]
         self.results = report
 
         # 12. Write matching_results.tsv
-        self._write_matching_results(final_predictions)
+        self._write_candidate_pairs(val_candidates, sorted(val_s1_ids))
+        self._write_matching_results(final_predictions, sorted(val_s1_ids))
 
         print("\n" + "=" * 70)
         print("FINAL RESULTS")
@@ -267,20 +275,19 @@ class BaselinePipeline:
             for r in feature_df.itertuples(index=False)
         ]
 
+        if feature_df.empty:
+            raise ValueError("No candidate pairs available for training")
         n_pos = (feature_df["label"] == 1).sum()
         n_neg = (feature_df["label"] == 0).sum()
         print(f"  Positive pairs: {n_pos:,}")
         print(f"  Negative pairs: {n_neg:,}")
         print(f"  Positive rate : {n_pos / len(feature_df):.4f}")
 
-        # Optional pair sampling (keeps memory manageable)
-        sample_size = self.config["training"].get("sample_train_pairs")
-        if sample_size and len(feature_df) > sample_size:
-            print(f"  Sampling {sample_size:,} pairs…")
-            feature_df = feature_df.sample(n=sample_size, random_state=42)
-
         # Entity-level split (prevents leakage across S1 entities)
-        all_s1_ids = feature_df["source1_entity_id"].unique()
+        # Include entities with zero candidates; sample only training pairs.
+        all_s1_ids = self.s1_train[schemas.COL_ENTITY_ID].to_numpy()
+        if set(all_s1_ids) != set(gt_dict):
+            raise ValueError("Ground truth must cover exactly the Source 1 training cohort")
         train_ids, val_ids = train_test_split(
             all_s1_ids,
             test_size=self.config["training"]["val_split"],
@@ -293,6 +300,11 @@ class BaselinePipeline:
 
         train_df = feature_df[train_mask].copy()
         val_df   = feature_df[val_mask].copy()
+        sample_size = self.config["training"].get("sample_train_pairs")
+        if sample_size and len(train_df) > sample_size:
+            train_df = train_df.sample(n=sample_size, random_state=42)
+        if train_df["label"].nunique() < 2 or val_df.empty:
+            raise ValueError("Need both training classes and at least one validation pair; enlarge the sample")
 
         id_cols      = ["source1_entity_id", "candidate_entity_id"]
         feature_cols = [c for c in feature_df.columns if c not in id_cols + ["label"]]
@@ -309,7 +321,7 @@ class BaselinePipeline:
 
         return X_train, X_val, y_train, y_val, val_ids_set
 
-    def _write_candidate_pairs(self, candidate_pairs: pd.DataFrame) -> None:
+    def _write_candidate_pairs(self, candidate_pairs: pd.DataFrame, source1_ids=None) -> None:
         """Write output/candidate_pairs.tsv."""
         out_dir = Path(self.config["data"]["output_dir"])
         out_dir.mkdir(parents=True, exist_ok=True)
@@ -324,9 +336,9 @@ class BaselinePipeline:
             .rename(columns={"candidate_entity_id": "candidate_entity_ids"})
         )
 
-        # Ensure every S1 train entity has a row (even singletons with no candidates)
+        # Ensure every entity in the output cohort has a row, including singletons.
         all_s1 = pd.DataFrame(
-            {"source1_entity_id": self.s1_train[schemas.COL_ENTITY_ID]}
+            {"source1_entity_id": source1_ids if source1_ids is not None else self.s1_train[schemas.COL_ENTITY_ID]}
         )
         result = all_s1.merge(grouped, on="source1_entity_id", how="left")
         result["candidate_entity_ids"] = result["candidate_entity_ids"].fillna("")
@@ -334,14 +346,14 @@ class BaselinePipeline:
         result.to_csv(out_path, sep="\t", index=False)
         print(f"\n  Wrote candidate_pairs.tsv  → {out_path}")
 
-    def _write_matching_results(self, predictions: dict) -> None:
+    def _write_matching_results(self, predictions: dict, source1_ids=None) -> None:
         """Write output/matching_results.tsv."""
         out_dir = Path(self.config["data"]["output_dir"])
         out_dir.mkdir(parents=True, exist_ok=True)
         out_path = out_dir / "matching_results.tsv"
 
         rows = []
-        for s1_id in self.s1_train[schemas.COL_ENTITY_ID]:
+        for s1_id in (source1_ids if source1_ids is not None else self.s1_train[schemas.COL_ENTITY_ID]):
             matched = predictions.get(s1_id, [])
             deduped = list(dict.fromkeys(matched))
             rows.append({

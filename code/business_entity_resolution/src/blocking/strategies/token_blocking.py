@@ -135,18 +135,11 @@ def generate_exact_country_token_pairs(
     candidates: pd.DataFrame,
     country_token_index: Dict,
     stop_tokens: Set[str],
-    max_cands_per_s1: Optional[int] = None,
 ) -> pd.DataFrame:
     """
     Strategy: exact_country_name_token
     Generates pairs where S1 and candidate share the same country AND
     at least one non-stop name token whose bucket is within size limit.
-
-    Parameters
-    ----------
-    max_cands_per_s1 : int, optional
-        Hard cap on candidates generated per S1 entity from this strategy.
-        When set, we stop after collecting this many candidates.
 
     Returns DataFrame: source1_entity_id, candidate_entity_id
     """
@@ -165,10 +158,6 @@ def generate_exact_country_token_pairs(
                 if cand_id not in seen:
                     seen.add(cand_id)
                     records.append((s1_id, cand_id))
-                    if max_cands_per_s1 and len(seen) >= max_cands_per_s1:
-                        break
-            if max_cands_per_s1 and len(seen) >= max_cands_per_s1:
-                break
 
     if not records:
         return pd.DataFrame(columns=[COL_SOURCE1_ID, COL_CANDIDATE_ID])
@@ -181,7 +170,6 @@ def generate_token_overlap_pairs(
     candidates: pd.DataFrame,
     token_index: Dict,
     stop_tokens: Set[str],
-    max_cands_per_s1: Optional[int] = None,
 ) -> pd.DataFrame:
     """
     Strategy: name_token_overlap
@@ -203,10 +191,6 @@ def generate_token_overlap_pairs(
                 if cand_id not in seen:
                     seen.add(cand_id)
                     records.append((s1_id, cand_id))
-                    if max_cands_per_s1 and len(seen) >= max_cands_per_s1:
-                        break
-            if max_cands_per_s1 and len(seen) >= max_cands_per_s1:
-                break
 
     if not records:
         return pd.DataFrame(columns=[COL_SOURCE1_ID, COL_CANDIDATE_ID])

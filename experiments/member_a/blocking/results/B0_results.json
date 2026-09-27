@@ -1,0 +1,17 @@
+{
+  "blocking_recall": 0.0,
+  "total_candidates": 0,
+  "total_true_pairs": 86487,
+  "true_pairs_recalled": 0,
+  "avg_candidates_per_s1": 0.0,
+  "median_candidates_per_s1": 0.0,
+  "p95_candidates_per_s1": 0.0,
+  "max_candidates_per_s1": 0,
+  "reduction_ratio": 1.0,
+  "per_strategy_recall": {},
+  "runtime_seconds": 9.705139875411987,
+  "experiment_id": "B0",
+  "description": "Baseline: no blocking (empty candidates) \u2014 recall = 0",
+  "n_s1": 25000,
+  "n_s23": 10320219
+}
