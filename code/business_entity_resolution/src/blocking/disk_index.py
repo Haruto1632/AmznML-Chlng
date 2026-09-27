@@ -13,18 +13,34 @@ import jellyfish
 import numpy as np
 
 DTYPE = np.dtype([("key", "<u8"), ("row", "<u4")])
-VERSION = 1
+VERSION = 3  # bumped: added token-pair (bigram) keys + phonetic all tokens
 
 
 def keys(record):
     tokens = sorted(record.tokens.split(), key=lambda t: (-len(t), t))[:6]
     numbers = sorted(record.numbers.split(), key=lambda t: (-len(t), t))[:2]
     result = [("t|" + t, 1) for t in tokens]
-    if record.name:
-        result.append(("e|" + " ".join(sorted(record.name.split())), 2))
-    phonetic = next((t for t in tokens if t.isascii() and t.isalpha()), None)
-    if phonetic:
-        result.append(("p|" + record.country + "|" + jellyfish.soundex(phonetic), 4))
+    name = record.name if isinstance(record.name, str) else ""
+    if name:
+        result.append(("e|" + " ".join(sorted(name.split())), 2))
+        # Char-trigram keys for typo/OCR-variant tolerance (e.g. 'spdr' ~ 'sdr').
+        condensed = name.replace(" ", "")
+        if len(condensed) >= 3:
+            trigrams = sorted({condensed[j:j+3] for j in range(len(condensed)-2)})
+            mid = len(trigrams) // 2
+            for tg in trigrams[max(0, mid-1):mid+2]:
+                result.append(("g|" + tg, 16))
+        # Sorted token-pair (bigram) keys: more discriminative than singletons for
+        # common words like 'environmental'+'rogers'. Catches subset-name matches
+        # where S2/S3 has extra tokens ('environmental rogers svidais' ⊇ 'environmental rogers').
+        sorted_tokens = sorted(tokens)
+        for i in range(len(sorted_tokens)):
+            for j in range(i+1, min(i+3, len(sorted_tokens))):
+                result.append(("b|" + sorted_tokens[i] + "|" + sorted_tokens[j], 32))
+    # Phonetic for ALL long-enough ASCII tokens (not just first)
+    for t in tokens[:3]:
+        if t.isascii() and t.isalpha() and len(t) >= 4:
+            result.append(("p|" + record.country + "|" + jellyfish.soundex(t), 4))
     for number in numbers:
         if len(number) >= 3:
             result.append(("a|" + number, 8))
@@ -89,7 +105,13 @@ class DiskBlocker:
         self.max_keys = max_keys
 
     def query(self, source):
-        """Return local S1 row, global S23 row, evidence mask. All bounds explicit."""
+        """Return local S1 row, global S23 row, evidence mask. All bounds explicit.
+
+        High-priority keys (exact sorted name, reason bit 2; phonetic, reason bit 4;
+        address+token, reason bit 8) are always used unconditionally — they have small
+        buckets by construction. Low-priority token keys (reason bit 1) are capped at
+        max_keys to avoid materializing huge buckets for very common tokens.
+        """
         records = list(source.itertuples(index=False))
         lists = [keys(r) for r in records]
         flat = [k for pairs in lists for k, _ in pairs]
@@ -97,21 +119,26 @@ class DiskBlocker:
         results = []
         cursor = 0
         for i, (record, record_keys) in enumerate(zip(records, lists)):
-            usable = []
+            priority = []   # exact / phonetic / address — always used
+            token_keys = [] # plain token keys — capped at max_keys
             for key, reason in record_keys:
                 p = int(positions[cursor]); cursor += 1
                 if p < len(self.keys) and self.keys[p] == key:
                     left, right = int(self.offsets[p]), int(self.offsets[p+1])
-                    usable.append((right-left, left, right, reason))
-            usable.sort()
+                    entry = (right-left, left, right, reason)
+                    if reason > 1:   # exact (2), phonetic (4), address (8)
+                        priority.append(entry)
+                    else:
+                        token_keys.append(entry)
+            token_keys.sort()  # smallest buckets first
             evidence = {}
-            for size, left, right, reason in usable[:self.max_keys]:
+            for size, left, right, reason in priority + token_keys[:self.max_keys]:
                 for rid in self.rows[left:right]:
                     rid = int(rid)
                     old_mask, old_weight = evidence.get(rid, (0, 0.))
                     evidence[rid] = (old_mask | reason, old_weight + 1 / size)
             if evidence:
-                # Candidate retrieval is bounded at max_keys * bucket_limit.
+                # Sort: most evidence bits first, then highest inverse-bucket-weight, then stable row id.
                 selected = sorted(evidence, key=lambda rid: (-evidence[rid][0].bit_count(), -evidence[rid][1], rid))[:self.max_candidates]
                 results.extend((i, rid, evidence[rid][0]) for rid in selected)
         return np.asarray(results, dtype=np.int64).reshape(-1, 3)
