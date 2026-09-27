@@ -60,6 +60,14 @@ def evaluate_blocking(
         missed_pairs_sample      -- list of (s1_id, true_id) pairs NOT in candidates (sample)
     """
     gt_dict = ground_truth_to_dict(ground_truth)
+    if not gt_dict:
+        raise ValueError("Blocking evaluation requires non-empty ground truth")
+    if not candidate_pairs[COL_SOURCE1_ID].isin(gt_dict).all():
+        raise ValueError("Candidate Source 1 IDs must belong to the evaluation cohort")
+    n_source1_total = len(gt_dict) if n_source1_total is None else n_source1_total
+    if n_source1_total < len(gt_dict):
+        raise ValueError("n_source1_total cannot be smaller than the ground truth cohort")
+    unique_pairs = candidate_pairs.drop_duplicates([COL_SOURCE1_ID, COL_CANDIDATE_ID])
 
     # ── Build candidate lookup: s1_id → set(cand_ids) ────────────────────
     cand_lookup: Dict[str, set] = {}
@@ -87,14 +95,16 @@ def evaluate_blocking(
     blocking_recall = recalled / total_true if total_true > 0 else 0.0
 
     # ── Candidate count statistics ────────────────────────────────────────
-    counts_per_s1 = candidate_pairs.groupby(COL_SOURCE1_ID).size()
+    counts_per_s1 = unique_pairs.groupby(COL_SOURCE1_ID).size().reindex(gt_dict, fill_value=0)
+    if n_source1_total > len(counts_per_s1):
+        counts_per_s1 = pd.concat([counts_per_s1, pd.Series(0, index=range(n_source1_total - len(counts_per_s1)))])
     avg_cands = float(counts_per_s1.mean()) if len(counts_per_s1) > 0 else 0.0
     median_cands = float(counts_per_s1.median()) if len(counts_per_s1) > 0 else 0.0
     p95_cands = float(np.percentile(counts_per_s1.values, 95)) if len(counts_per_s1) > 0 else 0.0
     max_cands = int(counts_per_s1.max()) if len(counts_per_s1) > 0 else 0
 
     # ── Reduction ratio ───────────────────────────────────────────────────
-    total_candidates = len(candidate_pairs)
+    total_candidates = len(unique_pairs)
     if n_source1_total and n_source23_total:
         brute_force = n_source1_total * n_source23_total
         reduction_ratio = 1.0 - (total_candidates / brute_force)

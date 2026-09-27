@@ -1,0 +1,20 @@
+{
+  "blocking_recall": 0.5976528792498418,
+  "total_candidates": 652791,
+  "total_true_pairs": 17383,
+  "true_pairs_recalled": 10389,
+  "avg_candidates_per_s1": 149.55120274914088,
+  "median_candidates_per_s1": 200.0,
+  "p95_candidates_per_s1": 246.80000000000018,
+  "max_candidates_per_s1": 1288,
+  "reduction_ratio": 0.9999873492800879,
+  "per_strategy_recall": {
+    "exact_country_name_token": 0.29540355519760686,
+    "address_token_overlap": 0.46263590864637866
+  },
+  "runtime_seconds": 136.58502554893494,
+  "experiment_id": "B2",
+  "description": "Token + address blocking",
+  "n_s1": 5000,
+  "n_s23": 10320219
+}

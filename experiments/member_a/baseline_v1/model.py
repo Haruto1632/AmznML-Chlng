@@ -70,6 +70,7 @@ class MatchingModel:
             'min_child_samples': self.model_config['min_child_samples'],
             'random_state': self.model_config['random_state'],
             'verbose': -1,
+            'num_threads': self.model_config.get('num_threads', 0),
         }
         
         model = lgb.train(

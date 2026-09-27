@@ -36,7 +36,7 @@ def write_matching_results(
     path : str
         Output file path.
     """
-    os.makedirs(os.path.dirname(path), exist_ok=True)
+    os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
     rows = []
     seen = set()
     for s1_id in all_s1_ids:
@@ -50,7 +50,7 @@ def write_matching_results(
             "source1_entity_id": s1_id,
             "matched_entity_ids": _ids_to_str(deduped),
         })
-    df = pd.DataFrame(rows)
+    df = pd.DataFrame(rows, columns=["source1_entity_id", "matched_entity_ids"])
     df.to_csv(path, sep="\t", index=False)
 
 
@@ -71,7 +71,11 @@ def write_candidate_pairs(
     path : str
         Output file path.
     """
-    os.makedirs(os.path.dirname(path), exist_ok=True)
+    os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
+    if len(set(all_s1_ids)) != len(all_s1_ids):
+        raise ValueError("Duplicate source1_entity_id in candidate output cohort")
+    if not candidate_pairs["source1_entity_id"].isin(all_s1_ids).all():
+        raise ValueError("Candidate pairs contain Source 1 IDs outside output cohort")
 
     # Group candidates per S1 entity
     if len(candidate_pairs) > 0:
@@ -123,6 +127,14 @@ def validate_output_integrity(
         return [f"Could not read candidate_pairs.tsv: {e}"]
 
     # --- matching_results.tsv checks ---
+    for frame, required, label in [
+        (matching, {"source1_entity_id", "matched_entity_ids"}, "matching_results.tsv"),
+        (candidates, {"source1_entity_id", "candidate_entity_ids"}, "candidate_pairs.tsv"),
+    ]:
+        if set(frame.columns) != required:
+            violations.append(f"{label}: invalid columns")
+    if violations:
+        return violations
     m_s1_ids = set(matching["source1_entity_id"].tolist())
     if m_s1_ids != s1_ids:
         missing = s1_ids - m_s1_ids
@@ -165,11 +177,16 @@ def validate_output_integrity(
     c_s1_ids = set(candidates["source1_entity_id"].tolist())
     if c_s1_ids != s1_ids:
         missing = s1_ids - c_s1_ids
+        extra = c_s1_ids - s1_ids
+        if extra:
+            violations.append(f"candidate_pairs.tsv: {len(extra)} extra S1 entities not in test")
         if missing:
             violations.append(
                 f"candidate_pairs.tsv: missing {len(missing)} S1 entities"
             )
 
+    if candidates["source1_entity_id"].duplicated().any():
+        violations.append("candidate_pairs.tsv: duplicate source1_entity_id rows")
     candidate_index: Dict[str, Set[str]] = {}
     for _, row in candidates.iterrows():
         s1_id = row["source1_entity_id"]
@@ -180,6 +197,8 @@ def validate_output_integrity(
         ids = [x.strip() for x in cand_str.split(",") if x.strip()]
         id_set = set()
         for cid in ids:
+            if cid.startswith("S1-"):
+                violations.append(f"candidate_pairs.tsv: S1 entity {cid} appears as a candidate")
             if cid not in valid_candidate_ids:
                 violations.append(
                     f"candidate_pairs.tsv: {cid} does not exist in test S2/S3"

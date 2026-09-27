@@ -55,7 +55,7 @@ def load_source(path: str) -> pd.DataFrame:
     if not os.path.exists(path):
         raise FileNotFoundError(f"Source file not found: {path}")
 
-    df = pd.read_csv(path, sep="\t", dtype=str)
+    df = pd.read_csv(path, sep="\t", dtype=str, keep_default_na=False)
 
     missing = [c for c in SOURCE_REQUIRED_COLS if c not in df.columns]
     if missing:
@@ -89,7 +89,7 @@ def load_ground_truth(path: str) -> pd.DataFrame:
     if not os.path.exists(path):
         raise FileNotFoundError(f"Ground truth file not found: {path}")
 
-    df = pd.read_csv(path, sep="\t", dtype=str)
+    df = pd.read_csv(path, sep="\t", dtype=str, keep_default_na=False)
 
     missing = [c for c in GT_REQUIRED_COLS if c not in df.columns]
     if missing:
@@ -164,9 +164,10 @@ def ground_truth_to_dict(gt_df: pd.DataFrame) -> Dict[str, List[str]]:
         Singletons map to an empty list [].
     """
     result: Dict[str, List[str]] = {}
-    for _, row in gt_df.iterrows():
-        s1_id = row[COL_SOURCE1_ID]
-        matched_str = row[COL_MATCHED_IDS].strip()
+    if gt_df[COL_SOURCE1_ID].duplicated().any():
+        raise ValueError("Duplicate Source 1 IDs in ground truth")
+    for s1_id, matched_str in gt_df[[COL_SOURCE1_ID, COL_MATCHED_IDS]].itertuples(index=False, name=None):
+        matched_str = matched_str.strip()
         if matched_str:
             result[s1_id] = [m.strip() for m in matched_str.split(",") if m.strip()]
         else:

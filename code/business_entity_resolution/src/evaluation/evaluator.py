@@ -3,8 +3,7 @@ evaluator.py — F_0.5 evaluation framework.
 
 Owner: Member C  |  Branch: feature/evaluation-pipeline
 
-TODO (Member C): Implement all evaluation functions.
-See TEAM_TASKS.md Task C-2.
+Macro metrics include the complete supplied Source 1 evaluation cohort.
 """
 
 from __future__ import annotations
@@ -51,6 +50,10 @@ def compute_f05_per_entity(
         Columns:
           source1_entity_id, precision, recall, f05, is_singleton, is_correct_singleton
     """
+    if not ground_truth:
+        raise ValueError("Evaluation requires non-empty ground truth")
+    if predictions.keys() - ground_truth.keys():
+        raise ValueError("Predictions contain Source 1 IDs outside the evaluation cohort")
     rows = []
     for s1_id, true_ids in ground_truth.items():
         pred_ids = predictions.get(s1_id, [])
@@ -131,8 +134,12 @@ def full_evaluation_report(
 
     # Blocking stats (if candidate_pairs provided)
     if candidate_pairs is not None:
-        # TODO: delegate to blocking_eval.evaluate_blocking
-        pass
+        from ..candidate_generation.blocking_eval import evaluate_blocking
+        gt_df = pd.DataFrame({
+            COL_SOURCE1_ID: list(ground_truth),
+            "matched_entity_ids": [",".join(ids) for ids in ground_truth.values()],
+        })
+        report.update(evaluate_blocking(candidate_pairs, gt_df))
 
     return report
 

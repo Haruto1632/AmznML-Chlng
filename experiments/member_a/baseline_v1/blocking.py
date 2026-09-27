@@ -288,7 +288,7 @@ class MultiStrategyBlocker:
             return df
         
         # Sort by number of strategies (descending) within each S1
-        df = df.sort_values(['source1_entity_id', 'num_strategies'], ascending=[True, False])
+        df = df.sort_values(['source1_entity_id', 'num_strategies', 'candidate_entity_id'], ascending=[True, False, True])
         
         # Keep top N per S1
         df = df.groupby('source1_entity_id').head(self.max_candidates).reset_index(drop=True)
