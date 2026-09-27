@@ -1,596 +1,240 @@
-<p align="center"><h1 align="center">AMZNML-CHLNG</h1></p>
 <p align="center">
-	<em><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></em>
+  <h1 align="center">AMZNML-CHLNG</h1>
 </p>
+
 <p align="center">
-	<img src="https://img.shields.io/github/license/Haruto1632/AmznML-Chlng?style=default&logo=opensourceinitiative&logoColor=white&color=0080ff" alt="license">
-	<img src="https://img.shields.io/github/last-commit/Haruto1632/AmznML-Chlng?style=default&logo=git&logoColor=white&color=0080ff" alt="last-commit">
-	<img src="https://img.shields.io/github/languages/top/Haruto1632/AmznML-Chlng?style=default&color=0080ff" alt="repo-top-language">
-	<img src="https://img.shields.io/github/languages/count/Haruto1632/AmznML-Chlng?style=default&color=0080ff" alt="repo-language-count">
+  <strong>Amazon ML Challenge 2026 — Business Entity Resolution</strong>
 </p>
-<p align="center"><!-- default option, no dependency badges. -->
-</p>
+
 <p align="center">
-	<!-- default option, no dependency badges. -->
+  <img src="https://img.shields.io/github/license/Haruto1632/AmznML-Chlng?style=default&logo=opensourceinitiative&logoColor=white&color=0080ff" alt="license">
+  <img src="https://img.shields.io/github/last-commit/Haruto1632/AmznML-Chlng?style=default&logo=git&logoColor=white&color=0080ff" alt="last-commit">
+  <img src="https://img.shields.io/github/languages/top/Haruto1632/AmznML-Chlng?style=default&color=0080ff" alt="repo-top-language">
+  <img src="https://img.shields.io/github/languages/count/Haruto1632/AmznML-Chlng?style=default&color=0080ff" alt="repo-language-count">
 </p>
-<br>
-
-##  Table of Contents
-
-- [ Overview](#-overview)
-- [ Features](#-features)
-- [ Project Structure](#-project-structure)
-  - [ Project Index](#-project-index)
-- [ Getting Started](#-getting-started)
-  - [ Prerequisites](#-prerequisites)
-  - [ Installation](#-installation)
-  - [ Usage](#-usage)
-  - [ Testing](#-testing)
-- [ Project Roadmap](#-project-roadmap)
-- [ Contributing](#-contributing)
-- [ License](#-license)
-- [ Acknowledgments](#-acknowledgments)
 
 ---
 
-##  Overview
+## Overview
 
-<code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code>
+This repository contains our solution for the **Amazon ML Challenge 2026 — Business Entity Resolution** task.
 
----
+The objective is to identify records in **Source 2** and **Source 3** that correspond to each entity in **Source 1**. The pipeline is designed for large datasets where exhaustive all-pairs comparison is not practical.
 
-##  Features
+For each Source 1 entity, the system generates a bounded candidate set, computes matching features, scores candidate pairs with a machine-learning model, calibrates the decision threshold, and writes the required challenge output files.
 
-<code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code>
+## Features
 
----
+- Data loading for the challenge TSV datasets
+- Name, address, and country normalization
+- Bounded candidate generation / blocking
+- Multiple blocking keys for names and addresses
+- String and address similarity features
+- Country-aware matching features
+- LightGBM-based pair classification
+- Threshold calibration for the challenge F0.5 objective
+- Batched inference over the test Source 1 dataset
+- Candidate-pair and matching-result generation
+- Submission validation with the official challenge validator
+- No external business-data lookup, geocoding, or API enrichment
 
-##  Project Structure
+## Project Structure
 
-```sh
-└── AmznML-Chlng/
-    ├── 6ab674645103d_emails_comms_amazon_ml_challenge_2026.pdf
-    ├── ARCHITECTURE.md
-    ├── FULL_RUN_REPORT.md
-    ├── GIT_WORKFLOW.md
-    ├── LICENSE
-    ├── PROJECT_HANDOFF.md
-    ├── README.md
-    ├── SCALE_NOTES.md
-    ├── SUBMISSION_CHECKLIST.md
-    ├── TEAM_TASKS.md
-    ├── code
-    │   └── business_entity_resolution
-    ├── entity_resolution_pipeline.png
-    ├── exp_log.txt
-    ├── experiments
-    │   ├── ablation_results.md
-    │   ├── baseline.md
-    │   ├── blocking_v1.md
-    │   ├── data_exploration.md
-    │   ├── member_a
-    │   └── model_v1.md
-    └── student_resource
-        ├── Documentation_template.md
-        ├── README.md
-        └── utils
+```text
+AmznML-Chlng/
+├── code/
+│   └── business_entity_resolution/
+│       ├── src/
+│       ├── tests/
+│       ├── run.py
+│       ├── requirements.txt
+│       └── README.md
+├── output/
+│   ├── matching_results.tsv
+│   └── candidate_pairs.tsv
+├── student_resource/
+│   ├── dataset/
+│   └── utils/
+├── ARCHITECTURE.md
+├── FULL_RUN_REPORT.md
+├── GIT_WORKFLOW.md
+├── LICENSE
+├── PROJECT_HANDOFF.md
+├── SCALE_NOTES.md
+├── SUBMISSION_CHECKLIST.md
+└── README.md
 ```
 
+The detailed runnable documentation for the submitted pipeline is located at:
 
-###  Project Index
-<details open>
-	<summary><b><code>AMZNML-CHLNG/</code></b></summary>
-	<details> <!-- __root__ Submodule -->
-		<summary><b>__root__</b></summary>
-		<blockquote>
-			<table>
-			<tr>
-				<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/exp_log.txt'>exp_log.txt</a></b></td>
-				<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-			</tr>
-			</table>
-		</blockquote>
-	</details>
-	<details> <!-- experiments Submodule -->
-		<summary><b>experiments</b></summary>
-		<blockquote>
-			<details>
-				<summary><b>member_a</b></summary>
-				<blockquote>
-					<details>
-						<summary><b>blocking</b></summary>
-						<blockquote>
-							<table>
-							<tr>
-								<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/experiments/member_a/blocking/run_experiments.py'>run_experiments.py</a></b></td>
-								<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-							</tr>
-							<tr>
-								<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/experiments/member_a/blocking/preprocess_data.py'>preprocess_data.py</a></b></td>
-								<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-							</tr>
-							<tr>
-								<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/experiments/member_a/blocking/generate_candidates_tsv.py'>generate_candidates_tsv.py</a></b></td>
-								<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-							</tr>
-							</table>
-							<details>
-								<summary><b>results</b></summary>
-								<blockquote>
-									<table>
-									<tr>
-										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/experiments/member_a/blocking/results/B0_results.json'>B0_results.json</a></b></td>
-										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-									</tr>
-									<tr>
-										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/experiments/member_a/blocking/results/B2_results.json'>B2_results.json</a></b></td>
-										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-									</tr>
-									<tr>
-										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/experiments/member_a/blocking/results/B1_results.json'>B1_results.json</a></b></td>
-										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-									</tr>
-									</table>
-								</blockquote>
-							</details>
-						</blockquote>
-					</details>
-					<details>
-						<summary><b>baseline_v1</b></summary>
-						<blockquote>
-							<table>
-							<tr>
-								<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/experiments/member_a/baseline_v1/features.py'>features.py</a></b></td>
-								<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-							</tr>
-							<tr>
-								<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/experiments/member_a/baseline_v1/test_setup.py'>test_setup.py</a></b></td>
-								<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-							</tr>
-							<tr>
-								<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/experiments/member_a/baseline_v1/blocking.py'>blocking.py</a></b></td>
-								<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-							</tr>
-							<tr>
-								<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/experiments/member_a/baseline_v1/normalization.py'>normalization.py</a></b></td>
-								<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-							</tr>
-							<tr>
-								<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/experiments/member_a/baseline_v1/pipeline.py'>pipeline.py</a></b></td>
-								<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-							</tr>
-							<tr>
-								<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/experiments/member_a/baseline_v1/_project_paths.py'>_project_paths.py</a></b></td>
-								<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-							</tr>
-							<tr>
-								<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/experiments/member_a/baseline_v1/experiment_config.yaml'>experiment_config.yaml</a></b></td>
-								<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-							</tr>
-							<tr>
-								<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/experiments/member_a/baseline_v1/run_smoke.py'>run_smoke.py</a></b></td>
-								<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-							</tr>
-							<tr>
-								<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/experiments/member_a/baseline_v1/model.py'>model.py</a></b></td>
-								<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-							</tr>
-							<tr>
-								<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/experiments/member_a/baseline_v1/run_experiment.py'>run_experiment.py</a></b></td>
-								<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-							</tr>
-							</table>
-						</blockquote>
-					</details>
-				</blockquote>
-			</details>
-		</blockquote>
-	</details>
-	<details> <!-- student_resource Submodule -->
-		<summary><b>student_resource</b></summary>
-		<blockquote>
-			<details>
-				<summary><b>utils</b></summary>
-				<blockquote>
-					<table>
-					<tr>
-						<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/student_resource/utils/validate_submission.py'>validate_submission.py</a></b></td>
-						<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-					</tr>
-					</table>
-				</blockquote>
-			</details>
-		</blockquote>
-	</details>
-	<details> <!-- code Submodule -->
-		<summary><b>code</b></summary>
-		<blockquote>
-			<details>
-				<summary><b>business_entity_resolution</b></summary>
-				<blockquote>
-					<table>
-					<tr>
-						<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/requirements.txt'>requirements.txt</a></b></td>
-						<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-					</tr>
-					<tr>
-						<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/run.py'>run.py</a></b></td>
-						<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-					</tr>
-					</table>
-					<details>
-						<summary><b>src</b></summary>
-						<blockquote>
-							<details>
-								<summary><b>blocking</b></summary>
-								<blockquote>
-									<table>
-									<tr>
-										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/blocking/disk_index.py'>disk_index.py</a></b></td>
-										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-									</tr>
-									<tr>
-										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/blocking/blocker.py'>blocker.py</a></b></td>
-										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-									</tr>
-									</table>
-									<details>
-										<summary><b>strategies</b></summary>
-										<blockquote>
-											<table>
-											<tr>
-												<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/blocking/strategies/ngram_lsh.py'>ngram_lsh.py</a></b></td>
-												<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-											</tr>
-											<tr>
-												<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/blocking/strategies/exact_token.py'>exact_token.py</a></b></td>
-												<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-											</tr>
-											<tr>
-												<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/blocking/strategies/ngram_blocking.py'>ngram_blocking.py</a></b></td>
-												<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-											</tr>
-											<tr>
-												<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/blocking/strategies/address_token.py'>address_token.py</a></b></td>
-												<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-											</tr>
-											<tr>
-												<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/blocking/strategies/ann_blocking.py'>ann_blocking.py</a></b></td>
-												<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-											</tr>
-											<tr>
-												<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/blocking/strategies/phonetic.py'>phonetic.py</a></b></td>
-												<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-											</tr>
-											<tr>
-												<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/blocking/strategies/token_blocking.py'>token_blocking.py</a></b></td>
-												<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-											</tr>
-											<tr>
-												<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/blocking/strategies/address_blocking.py'>address_blocking.py</a></b></td>
-												<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-											</tr>
-											<tr>
-												<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/blocking/strategies/token_overlap.py'>token_overlap.py</a></b></td>
-												<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-											</tr>
-											<tr>
-												<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/blocking/strategies/phonetic_blocking.py'>phonetic_blocking.py</a></b></td>
-												<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-											</tr>
-											<tr>
-												<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/blocking/strategies/embedding_ann.py'>embedding_ann.py</a></b></td>
-												<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-											</tr>
-											</table>
-										</blockquote>
-									</details>
-								</blockquote>
-							</details>
-							<details>
-								<summary><b>evaluation</b></summary>
-								<blockquote>
-									<table>
-									<tr>
-										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/evaluation/evaluator.py'>evaluator.py</a></b></td>
-										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-									</tr>
-									</table>
-								</blockquote>
-							</details>
-							<details>
-								<summary><b>models</b></summary>
-								<blockquote>
-									<table>
-									<tr>
-										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/models/matcher.py'>matcher.py</a></b></td>
-										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-									</tr>
-									<tr>
-										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/models/baseline_model.py'>baseline_model.py</a></b></td>
-										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-									</tr>
-									<tr>
-										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/models/training_data.py'>training_data.py</a></b></td>
-										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-									</tr>
-									<tr>
-										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/models/hard_negatives.py'>hard_negatives.py</a></b></td>
-										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-									</tr>
-									<tr>
-										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/models/gbm_model.py'>gbm_model.py</a></b></td>
-										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-									</tr>
-									</table>
-								</blockquote>
-							</details>
-							<details>
-								<summary><b>candidate_generation</b></summary>
-								<blockquote>
-									<table>
-									<tr>
-										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/candidate_generation/candidate_store.py'>candidate_store.py</a></b></td>
-										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-									</tr>
-									<tr>
-										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/candidate_generation/blocking_eval.py'>blocking_eval.py</a></b></td>
-										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-									</tr>
-									</table>
-								</blockquote>
-							</details>
-							<details>
-								<summary><b>calibration</b></summary>
-								<blockquote>
-									<table>
-									<tr>
-										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/calibration/calibrator.py'>calibrator.py</a></b></td>
-										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-									</tr>
-									</table>
-								</blockquote>
-							</details>
-							<details>
-								<summary><b>scoring</b></summary>
-								<blockquote>
-									<table>
-									<tr>
-										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/scoring/scorer.py'>scorer.py</a></b></td>
-										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-									</tr>
-									</table>
-								</blockquote>
-							</details>
-							<details>
-								<summary><b>normalization</b></summary>
-								<blockquote>
-									<table>
-									<tr>
-										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/normalization/name_cleaner.py'>name_cleaner.py</a></b></td>
-										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-									</tr>
-									<tr>
-										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/normalization/address_cleaner.py'>address_cleaner.py</a></b></td>
-										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-									</tr>
-									<tr>
-										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/normalization/normalizer.py'>normalizer.py</a></b></td>
-										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-									</tr>
-									<tr>
-										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/normalization/country_mapper.py'>country_mapper.py</a></b></td>
-										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-									</tr>
-									</table>
-								</blockquote>
-							</details>
-							<details>
-								<summary><b>features</b></summary>
-								<blockquote>
-									<table>
-									<tr>
-										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/features/feature_builder.py'>feature_builder.py</a></b></td>
-										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-									</tr>
-									<tr>
-										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/features/country_features.py'>country_features.py</a></b></td>
-										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-									</tr>
-									<tr>
-										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/features/structural_features.py'>structural_features.py</a></b></td>
-										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-									</tr>
-									<tr>
-										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/features/name_features.py'>name_features.py</a></b></td>
-										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-									</tr>
-									<tr>
-										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/features/address_features.py'>address_features.py</a></b></td>
-										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-									</tr>
-									<tr>
-										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/features/batch_features.py'>batch_features.py</a></b></td>
-										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-									</tr>
-									</table>
-								</blockquote>
-							</details>
-							<details>
-								<summary><b>pipeline</b></summary>
-								<blockquote>
-									<table>
-									<tr>
-										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/pipeline/output_writer.py'>output_writer.py</a></b></td>
-										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-									</tr>
-									<tr>
-										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/pipeline/production.py'>production.py</a></b></td>
-										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-									</tr>
-									<tr>
-										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/pipeline/pipeline.py'>pipeline.py</a></b></td>
-										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-									</tr>
-									<tr>
-										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/pipeline/__main__.py'>__main__.py</a></b></td>
-										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-									</tr>
-									<tr>
-										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/pipeline/config.py'>config.py</a></b></td>
-										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-									</tr>
-									</table>
-								</blockquote>
-							</details>
-							<details>
-								<summary><b>shared</b></summary>
-								<blockquote>
-									<table>
-									<tr>
-										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/shared/schemas.py'>schemas.py</a></b></td>
-										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-									</tr>
-									<tr>
-										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/shared/disk_store.py'>disk_store.py</a></b></td>
-										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-									</tr>
-									<tr>
-										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/shared/data_loader.py'>data_loader.py</a></b></td>
-										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
-									</tr>
-									</table>
-								</blockquote>
-							</details>
-						</blockquote>
-					</details>
-				</blockquote>
-			</details>
-		</blockquote>
-	</details>
-</details>
-
----
-##  Getting Started
-
-###  Prerequisites
-
-Before getting started with AmznML-Chlng, ensure your runtime environment meets the following requirements:
-
-- **Programming Language:** Python
-- **Package Manager:** Pip
-
-
-###  Installation
-
-Install AmznML-Chlng using one of the following methods:
-
-**Build from source:**
-
-1. Clone the AmznML-Chlng repository:
-```sh
-❯ git clone https://github.com/Haruto1632/AmznML-Chlng
+```text
+code/business_entity_resolution/README.md
 ```
 
-2. Navigate to the project directory:
-```sh
-❯ cd AmznML-Chlng
+## Pipeline
+
+The solution follows a multi-stage entity-resolution pipeline:
+
+```text
+Challenge TSV data
+        │
+        ▼
+Normalization
+        │
+        ▼
+Candidate Generation / Blocking
+        │
+        ▼
+Pairwise Feature Extraction
+        │
+        ▼
+LightGBM Matching Model
+        │
+        ▼
+Threshold Calibration
+        │
+        ▼
+Test Inference
+        │
+        ├── matching_results.tsv
+        └── candidate_pairs.tsv
 ```
 
-3. Install the project dependencies:
+Candidate generation is intentionally bounded so that the system does not perform an all-pairs comparison between the source tables.
 
+## Getting Started
 
-**Using `pip`** &nbsp; [<img align="center" src="https://img.shields.io/badge/Pip-3776AB.svg?style={badge_style}&logo=pypi&logoColor=white" />](https://pypi.org/project/pip/)
+### Prerequisites
 
-```sh
-❯ pip install -r code/business_entity_resolution/requirements.txt
+- Python 3.12
+- The challenge dataset in the expected directory structure
+- Dependencies listed in `code/business_entity_resolution/requirements.txt`
+
+### Installation
+
+Create a virtual environment and install the project dependencies:
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r code/business_entity_resolution/requirements.txt
 ```
 
+### Training
 
+A reproducible training run can be started with:
 
-
-###  Usage
-Run AmznML-Chlng using the following command:
-**Using `pip`** &nbsp; [<img align="center" src="https://img.shields.io/badge/Pip-3776AB.svg?style={badge_style}&logo=pypi&logoColor=white" />](https://pypi.org/project/pip/)
-
-```sh
-❯ python {entrypoint}
+```powershell
+.\.venv\Scripts\python.exe -u -X utf8 code/business_entity_resolution/run.py train --train-entities 30000 --threads 4
 ```
 
+The training pipeline uses a sampled set of Source 1 entities and produces the model and calibration information used for inference.
 
-###  Testing
-Run the test suite using the following command:
-**Using `pip`** &nbsp; [<img align="center" src="https://img.shields.io/badge/Pip-3776AB.svg?style={badge_style}&logo=pypi&logoColor=white" />](https://pypi.org/project/pip/)
+### Inference
 
-```sh
-❯ pytest
+Run test inference with:
+
+```powershell
+.\.venv\Scripts\python.exe -u -X utf8 code/business_entity_resolution/run.py infer
 ```
 
+### Testing
 
----
-##  Project Roadmap
+Run the project tests with:
 
-- [X] **`Task 1`**: <strike>Implement feature one.</strike>
-- [ ] **`Task 2`**: Implement feature two.
-- [ ] **`Task 3`**: Implement feature three.
+```powershell
+.\.venv\Scripts\python.exe -m pytest code/business_entity_resolution/tests -q
+```
 
----
+## Output Files
 
-##  Contributing
+The inference pipeline produces the two challenge output files:
 
-- **💬 [Join the Discussions](https://github.com/Haruto1632/AmznML-Chlng/discussions)**: Share your insights, provide feedback, or ask questions.
-- **🐛 [Report Issues](https://github.com/Haruto1632/AmznML-Chlng/issues)**: Submit bugs found or log feature requests for the `AmznML-Chlng` project.
-- **💡 [Submit Pull Requests](https://github.com/Haruto1632/AmznML-Chlng/blob/main/CONTRIBUTING.md)**: Review open PRs, and submit your own PRs.
+### `output/matching_results.tsv`
 
-<details closed>
-<summary>Contributing Guidelines</summary>
+Contains the predicted matching Source 2 and Source 3 entity IDs for each Source 1 entity.
 
-1. **Fork the Repository**: Start by forking the project repository to your github account.
-2. **Clone Locally**: Clone the forked repository to your local machine using a git client.
-   ```sh
-   git clone https://github.com/Haruto1632/AmznML-Chlng
-   ```
-3. **Create a New Branch**: Always work on a new branch, giving it a descriptive name.
-   ```sh
-   git checkout -b new-feature-x
-   ```
-4. **Make Your Changes**: Develop and test your changes locally.
-5. **Commit Your Changes**: Commit with a clear message describing your updates.
-   ```sh
-   git commit -m 'Implemented new feature x.'
-   ```
-6. **Push to github**: Push the changes to your forked repository.
-   ```sh
-   git push origin new-feature-x
-   ```
-7. **Submit a Pull Request**: Create a PR against the original project repository. Clearly describe the changes and their motivations.
-8. **Review**: Once your PR is reviewed and approved, it will be merged into the main branch. Congratulations on your contribution!
-</details>
+Each Source 1 entity appears exactly once. Entities for which no match is predicted have an empty match field.
 
-<details closed>
-<summary>Contributor Graph</summary>
-<br>
-<p align="left">
-   <a href="https://github.com{/Haruto1632/AmznML-Chlng/}graphs/contributors">
-      <img src="https://contrib.rocks/image?repo=Haruto1632/AmznML-Chlng">
-   </a>
-</p>
-</details>
+### `output/candidate_pairs.tsv`
 
----
+Contains the final bounded candidate set considered by the matching pipeline.
 
-##  License
+Candidate generation is an important part of the solution because a true match cannot be recovered by the ranking model if it is absent from the candidate set.
 
-This project is protected under the [Apache License 2.0](https://choosealicense.com/licenses) License. For more details, refer to the [LICENSE](https://choosealicense.com/licenses/) file.
+## Validation
 
----
+The official submission validator can be run with:
 
-##  Acknowledgments
+```powershell
+.\.venv\Scripts\python.exe -X utf8 student_resource/utils/validate_submission.py `
+  --matching output/matching_results.tsv `
+  --candidate output/candidate_pairs.tsv `
+  --test-dir student_resource/dataset/test `
+  --check-ids
+```
 
-- List any resources, contributors, inspiration, etc. here.
+The current generated submission files have been checked with the validator and pass the structural/ID validation.
 
----
+## Project Roadmap
+
+### Completed
+
+- [x] Set up the Business Entity Resolution project structure
+- [x] Implement data loading and TSV handling
+- [x] Implement name, address, and country normalization
+- [x] Implement bounded candidate generation / blocking
+- [x] Implement pairwise matching features
+- [x] Integrate the LightGBM matching model
+- [x] Implement threshold calibration
+- [x] Implement full test-set inference
+- [x] Generate `matching_results.tsv`
+- [x] Generate `candidate_pairs.tsv`
+- [x] Run the official submission validator
+
+### Current / Future Work
+
+- [ ] Improve blocking recall without causing uncontrolled candidate growth
+- [ ] Analyze true matches missed during candidate generation
+- [ ] Benchmark alternative blocking strategies on controlled validation samples
+- [ ] Further tune matching thresholds and model parameters based on validation results
+- [ ] Keep the final submission package reproducible and within the challenge constraints
+
+## Challenge Constraints
+
+The solution is designed around the challenge requirements:
+
+- Challenge data is processed from the provided TSV files.
+- No external business-data lookup, geocoding, or API enrichment is used.
+- Candidate generation is bounded rather than an exhaustive all-pairs search.
+- Country handling is not restricted to a fixed US/India-only list.
+- The final submission uses the required TSV output format.
+- The submitted model is within the challenge model-size and licensing requirements.
+
+## Documentation
+
+Additional project documentation is available in:
+
+- `ARCHITECTURE.md` — system architecture and pipeline design
+- `FULL_RUN_REPORT.md` — full-run experiment and inference information
+- `SCALE_NOTES.md` — dataset and scalability notes
+- `PROJECT_HANDOFF.md` — development handoff information
+- `SUBMISSION_CHECKLIST.md` — submission preparation checklist
+- `code/business_entity_resolution/README.md` — runnable pipeline documentation
+
+## Contributing
+
+Development work is organized through Git branches. Before making changes:
+
+```powershell
+git checkout -b feature/<name>
+```
+
+Run the relevant tests before committing changes.
 
 ## License
 
-This repository is licensed under the Apache License 2.0. See the `LICENSE` file for the full license text.
+This project is licensed under the **Apache License 2.0**. See the `LICENSE` file for the complete license text.
+
+## Acknowledgments
+
+This project was developed as part of the **Amazon ML Challenge 2026**.
