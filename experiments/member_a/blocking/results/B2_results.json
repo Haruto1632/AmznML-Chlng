@@ -1,20 +1,20 @@
 {
-  "blocking_recall": 0.5976528792498418,
-  "total_candidates": 652791,
-  "total_true_pairs": 17383,
-  "true_pairs_recalled": 10389,
-  "avg_candidates_per_s1": 149.55120274914088,
-  "median_candidates_per_s1": 200.0,
-  "p95_candidates_per_s1": 246.80000000000018,
-  "max_candidates_per_s1": 1288,
-  "reduction_ratio": 0.9999873492800879,
+  "blocking_recall": 0.714165134644513,
+  "total_candidates": 25997309,
+  "total_true_pairs": 86487,
+  "true_pairs_recalled": 61766,
+  "avg_candidates_per_s1": 1039.89236,
+  "median_candidates_per_s1": 197.0,
+  "p95_candidates_per_s1": 4249.0,
+  "max_candidates_per_s1": 11153,
+  "reduction_ratio": 0.9998992373747108,
   "per_strategy_recall": {
-    "exact_country_name_token": 0.29540355519760686,
-    "address_token_overlap": 0.46263590864637866
+    "exact_country_name_token": 0.5532623400048562,
+    "address_token_overlap": 0.4726259437834588
   },
-  "runtime_seconds": 136.58502554893494,
+  "runtime_seconds": 922.747923374176,
   "experiment_id": "B2",
   "description": "Token + address blocking",
-  "n_s1": 5000,
+  "n_s1": 25000,
   "n_s23": 10320219
 }
