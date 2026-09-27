@@ -1,6 +1,6 @@
 <p align="center"><h1 align="center">AMZNML-CHLNG</h1></p>
 <p align="center">
-	<em><code>❯ REPLACE-ME</code></em>
+	<em><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></em>
 </p>
 <p align="center">
 	<img src="https://img.shields.io/github/license/Haruto1632/AmznML-Chlng?style=default&logo=opensourceinitiative&logoColor=white&color=0080ff" alt="license">
@@ -35,13 +35,13 @@
 
 ##  Overview
 
-<code>❯ REPLACE-ME</code>
+<code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code>
 
 ---
 
 ##  Features
 
-<code>❯ REPLACE-ME</code>
+<code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code>
 
 ---
 
@@ -86,7 +86,7 @@
 			<table>
 			<tr>
 				<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/exp_log.txt'>exp_log.txt</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
+				<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 			</tr>
 			</table>
 		</blockquote>
@@ -103,15 +103,15 @@
 							<table>
 							<tr>
 								<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/experiments/member_a/blocking/run_experiments.py'>run_experiments.py</a></b></td>
-								<td><code>❯ REPLACE-ME</code></td>
+								<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 							</tr>
 							<tr>
 								<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/experiments/member_a/blocking/preprocess_data.py'>preprocess_data.py</a></b></td>
-								<td><code>❯ REPLACE-ME</code></td>
+								<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 							</tr>
 							<tr>
 								<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/experiments/member_a/blocking/generate_candidates_tsv.py'>generate_candidates_tsv.py</a></b></td>
-								<td><code>❯ REPLACE-ME</code></td>
+								<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 							</tr>
 							</table>
 							<details>
@@ -120,15 +120,15 @@
 									<table>
 									<tr>
 										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/experiments/member_a/blocking/results/B0_results.json'>B0_results.json</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
+										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 									</tr>
 									<tr>
 										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/experiments/member_a/blocking/results/B2_results.json'>B2_results.json</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
+										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 									</tr>
 									<tr>
 										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/experiments/member_a/blocking/results/B1_results.json'>B1_results.json</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
+										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 									</tr>
 									</table>
 								</blockquote>
@@ -141,43 +141,43 @@
 							<table>
 							<tr>
 								<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/experiments/member_a/baseline_v1/features.py'>features.py</a></b></td>
-								<td><code>❯ REPLACE-ME</code></td>
+								<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 							</tr>
 							<tr>
 								<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/experiments/member_a/baseline_v1/test_setup.py'>test_setup.py</a></b></td>
-								<td><code>❯ REPLACE-ME</code></td>
+								<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 							</tr>
 							<tr>
 								<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/experiments/member_a/baseline_v1/blocking.py'>blocking.py</a></b></td>
-								<td><code>❯ REPLACE-ME</code></td>
+								<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 							</tr>
 							<tr>
 								<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/experiments/member_a/baseline_v1/normalization.py'>normalization.py</a></b></td>
-								<td><code>❯ REPLACE-ME</code></td>
+								<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 							</tr>
 							<tr>
 								<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/experiments/member_a/baseline_v1/pipeline.py'>pipeline.py</a></b></td>
-								<td><code>❯ REPLACE-ME</code></td>
+								<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 							</tr>
 							<tr>
 								<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/experiments/member_a/baseline_v1/_project_paths.py'>_project_paths.py</a></b></td>
-								<td><code>❯ REPLACE-ME</code></td>
+								<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 							</tr>
 							<tr>
 								<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/experiments/member_a/baseline_v1/experiment_config.yaml'>experiment_config.yaml</a></b></td>
-								<td><code>❯ REPLACE-ME</code></td>
+								<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 							</tr>
 							<tr>
 								<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/experiments/member_a/baseline_v1/run_smoke.py'>run_smoke.py</a></b></td>
-								<td><code>❯ REPLACE-ME</code></td>
+								<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 							</tr>
 							<tr>
 								<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/experiments/member_a/baseline_v1/model.py'>model.py</a></b></td>
-								<td><code>❯ REPLACE-ME</code></td>
+								<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 							</tr>
 							<tr>
 								<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/experiments/member_a/baseline_v1/run_experiment.py'>run_experiment.py</a></b></td>
-								<td><code>❯ REPLACE-ME</code></td>
+								<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 							</tr>
 							</table>
 						</blockquote>
@@ -195,7 +195,7 @@
 					<table>
 					<tr>
 						<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/student_resource/utils/validate_submission.py'>validate_submission.py</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 					</tr>
 					</table>
 				</blockquote>
@@ -211,11 +211,11 @@
 					<table>
 					<tr>
 						<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/requirements.txt'>requirements.txt</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 					</tr>
 					<tr>
 						<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/run.py'>run.py</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 					</tr>
 					</table>
 					<details>
@@ -227,11 +227,11 @@
 									<table>
 									<tr>
 										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/blocking/disk_index.py'>disk_index.py</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
+										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 									</tr>
 									<tr>
 										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/blocking/blocker.py'>blocker.py</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
+										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 									</tr>
 									</table>
 									<details>
@@ -240,47 +240,47 @@
 											<table>
 											<tr>
 												<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/blocking/strategies/ngram_lsh.py'>ngram_lsh.py</a></b></td>
-												<td><code>❯ REPLACE-ME</code></td>
+												<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 											</tr>
 											<tr>
 												<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/blocking/strategies/exact_token.py'>exact_token.py</a></b></td>
-												<td><code>❯ REPLACE-ME</code></td>
+												<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 											</tr>
 											<tr>
 												<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/blocking/strategies/ngram_blocking.py'>ngram_blocking.py</a></b></td>
-												<td><code>❯ REPLACE-ME</code></td>
+												<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 											</tr>
 											<tr>
 												<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/blocking/strategies/address_token.py'>address_token.py</a></b></td>
-												<td><code>❯ REPLACE-ME</code></td>
+												<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 											</tr>
 											<tr>
 												<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/blocking/strategies/ann_blocking.py'>ann_blocking.py</a></b></td>
-												<td><code>❯ REPLACE-ME</code></td>
+												<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 											</tr>
 											<tr>
 												<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/blocking/strategies/phonetic.py'>phonetic.py</a></b></td>
-												<td><code>❯ REPLACE-ME</code></td>
+												<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 											</tr>
 											<tr>
 												<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/blocking/strategies/token_blocking.py'>token_blocking.py</a></b></td>
-												<td><code>❯ REPLACE-ME</code></td>
+												<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 											</tr>
 											<tr>
 												<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/blocking/strategies/address_blocking.py'>address_blocking.py</a></b></td>
-												<td><code>❯ REPLACE-ME</code></td>
+												<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 											</tr>
 											<tr>
 												<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/blocking/strategies/token_overlap.py'>token_overlap.py</a></b></td>
-												<td><code>❯ REPLACE-ME</code></td>
+												<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 											</tr>
 											<tr>
 												<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/blocking/strategies/phonetic_blocking.py'>phonetic_blocking.py</a></b></td>
-												<td><code>❯ REPLACE-ME</code></td>
+												<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 											</tr>
 											<tr>
 												<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/blocking/strategies/embedding_ann.py'>embedding_ann.py</a></b></td>
-												<td><code>❯ REPLACE-ME</code></td>
+												<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 											</tr>
 											</table>
 										</blockquote>
@@ -293,7 +293,7 @@
 									<table>
 									<tr>
 										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/evaluation/evaluator.py'>evaluator.py</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
+										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 									</tr>
 									</table>
 								</blockquote>
@@ -304,23 +304,23 @@
 									<table>
 									<tr>
 										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/models/matcher.py'>matcher.py</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
+										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 									</tr>
 									<tr>
 										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/models/baseline_model.py'>baseline_model.py</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
+										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 									</tr>
 									<tr>
 										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/models/training_data.py'>training_data.py</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
+										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 									</tr>
 									<tr>
 										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/models/hard_negatives.py'>hard_negatives.py</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
+										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 									</tr>
 									<tr>
 										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/models/gbm_model.py'>gbm_model.py</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
+										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 									</tr>
 									</table>
 								</blockquote>
@@ -331,11 +331,11 @@
 									<table>
 									<tr>
 										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/candidate_generation/candidate_store.py'>candidate_store.py</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
+										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 									</tr>
 									<tr>
 										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/candidate_generation/blocking_eval.py'>blocking_eval.py</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
+										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 									</tr>
 									</table>
 								</blockquote>
@@ -346,7 +346,7 @@
 									<table>
 									<tr>
 										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/calibration/calibrator.py'>calibrator.py</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
+										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 									</tr>
 									</table>
 								</blockquote>
@@ -357,7 +357,7 @@
 									<table>
 									<tr>
 										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/scoring/scorer.py'>scorer.py</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
+										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 									</tr>
 									</table>
 								</blockquote>
@@ -368,19 +368,19 @@
 									<table>
 									<tr>
 										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/normalization/name_cleaner.py'>name_cleaner.py</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
+										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 									</tr>
 									<tr>
 										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/normalization/address_cleaner.py'>address_cleaner.py</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
+										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 									</tr>
 									<tr>
 										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/normalization/normalizer.py'>normalizer.py</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
+										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 									</tr>
 									<tr>
 										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/normalization/country_mapper.py'>country_mapper.py</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
+										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 									</tr>
 									</table>
 								</blockquote>
@@ -391,27 +391,27 @@
 									<table>
 									<tr>
 										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/features/feature_builder.py'>feature_builder.py</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
+										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 									</tr>
 									<tr>
 										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/features/country_features.py'>country_features.py</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
+										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 									</tr>
 									<tr>
 										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/features/structural_features.py'>structural_features.py</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
+										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 									</tr>
 									<tr>
 										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/features/name_features.py'>name_features.py</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
+										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 									</tr>
 									<tr>
 										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/features/address_features.py'>address_features.py</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
+										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 									</tr>
 									<tr>
 										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/features/batch_features.py'>batch_features.py</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
+										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 									</tr>
 									</table>
 								</blockquote>
@@ -422,23 +422,23 @@
 									<table>
 									<tr>
 										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/pipeline/output_writer.py'>output_writer.py</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
+										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 									</tr>
 									<tr>
 										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/pipeline/production.py'>production.py</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
+										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 									</tr>
 									<tr>
 										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/pipeline/pipeline.py'>pipeline.py</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
+										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 									</tr>
 									<tr>
 										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/pipeline/__main__.py'>__main__.py</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
+										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 									</tr>
 									<tr>
 										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/pipeline/config.py'>config.py</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
+										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 									</tr>
 									</table>
 								</blockquote>
@@ -449,15 +449,15 @@
 									<table>
 									<tr>
 										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/shared/schemas.py'>schemas.py</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
+										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 									</tr>
 									<tr>
 										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/shared/disk_store.py'>disk_store.py</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
+										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 									</tr>
 									<tr>
 										<td><b><a href='https://github.com/Haruto1632/AmznML-Chlng/blob/master/code/business_entity_resolution/src/shared/data_loader.py'>data_loader.py</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
+										<td><code>❯ Implemented for the Amazon ML Challenge 2026 Business Entity Resolution task.</code></td>
 									</tr>
 									</table>
 								</blockquote>
@@ -581,7 +581,7 @@ Run the test suite using the following command:
 
 ##  License
 
-This project is protected under the [SELECT-A-LICENSE](https://choosealicense.com/licenses) License. For more details, refer to the [LICENSE](https://choosealicense.com/licenses/) file.
+This project is protected under the [Apache License 2.0](https://choosealicense.com/licenses) License. For more details, refer to the [LICENSE](https://choosealicense.com/licenses/) file.
 
 ---
 
@@ -589,35 +589,8 @@ This project is protected under the [SELECT-A-LICENSE](https://choosealicense.co
 
 - List any resources, contributors, inspiration, etc. here.
 
----# Amazon ML Challenge 2026 — Business Entity Resolution
+---
 
-This project implements a scalable machine-learning pipeline for business entity
-resolution across three independent data sources.
+## License
 
-For every Source 1 entity, the pipeline identifies zero, one, or multiple
-matching records from Source 2 and Source 3.
-
-## Pipeline Overview
-
-The pipeline consists of the following stages:
-
-1. Data loading and normalization
-2. Bounded candidate generation / blocking
-3. String and address similarity feature extraction
-4. LightGBM binary classification
-5. Threshold calibration
-6. Batched test inference
-7. Generation of the required TSV outputs
-
-The system uses only the data provided by the challenge and does not perform
-external business lookups, geocoding, or external data augmentation.
-
-## Directory Structure
-
-```text
-business_entity_resolution/
-├── src/                    # Pipeline source code
-├── tests/                  # Pipeline tests
-├── run.py                  # Training and inference entry point
-├── requirements.txt        # Python dependencies
-└── README.md
+This repository is licensed under the Apache License 2.0. See the `LICENSE` file for the full license text.
